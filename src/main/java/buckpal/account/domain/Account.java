@@ -13,6 +13,19 @@ public class Account {
     private Money baselineBalance;
     private ActivityWindow activityWindow;
 
+    public static Account withoutId(
+            Money baselineBalance,
+            ActivityWindow activityWindow) {
+        return new Account(null, baselineBalance, activityWindow);
+    }
+
+    public static Account withId(
+            AccountId accountId,
+            Money baselineBalance,
+            ActivityWindow activityWindow) {
+        return new Account(accountId, baselineBalance, activityWindow);
+    }
+
     public Money calculateBalance() {
         return Money.add(
                 baselineBalance,
