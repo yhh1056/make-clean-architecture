@@ -1,19 +1,28 @@
 package buckpal.account.common;
 
+import static buckpal.account.common.ActivityTestData.*;
+
 import buckpal.account.domain.Account;
 import buckpal.account.domain.Account.AccountId;
 import buckpal.account.domain.ActivityWindow;
 import buckpal.account.domain.Money;
+import java.util.Objects;
 
 public class AccountTestData {
 
+	private static final Long DEFAULT_ID = 100L;
+
 	public static AccountBuilder defaultAccount() {
 		return new AccountBuilder()
-				.withAccountId(new AccountId(42L))
-				.withBaselineBalance(Money.of(999L))
+				.withAccountId(defaultAccountId())
+				.withBaselineBalance(Money.of(10000L))
 				.withActivityWindow(new ActivityWindow(
-						ActivityTestData.defaultActivity().build(),
-						ActivityTestData.defaultActivity().build()));
+						defaultActivity().build(),
+						defaultActivity().build()));
+	}
+
+	public static AccountId defaultAccountId() {
+		return new AccountId(DEFAULT_ID);
 	}
 
 	public static class AccountBuilder {
@@ -38,10 +47,7 @@ public class AccountTestData {
 		}
 
 		public Account build() {
-			return Account.withId(this.accountId, this.baselineBalance, this.activityWindow);
+			return new Account(accountId, baselineBalance, activityWindow);
 		}
-
 	}
-
-
 }

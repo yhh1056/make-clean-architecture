@@ -1,5 +1,7 @@
 package buckpal.account.common;
 
+import static buckpal.account.common.AccountTestData.defaultAccountId;
+
 import buckpal.account.domain.Account.AccountId;
 import buckpal.account.domain.Activity;
 import buckpal.account.domain.Activity.ActivityId;
@@ -8,61 +10,56 @@ import java.time.LocalDateTime;
 
 public class ActivityTestData {
 
-	public static ActivityBuilder defaultActivity(){
-		return new ActivityBuilder()
-				.withOwnerAccount(new AccountId(42L))
-				.withSourceAccount(new AccountId(42L))
-				.withTargetAccount(new AccountId(41L))
-				.withTimestamp(LocalDateTime.now())
-				.withMoney(Money.of(999L));
-	}
+    public static ActivityBuilder defaultActivity() {
+        return new ActivityBuilder()
+                .withOwnerAccountId(defaultAccountId())
+                .withSourceAccountId(defaultAccountId())
+                .withTargetAccountId(new AccountId(101L))
+                .withTimestamp(LocalDateTime.now())
+                .withMoney(Money.of(500L));
+    }
 
-	public static class ActivityBuilder {
-		private ActivityId id;
-		private AccountId ownerAccountId;
-		private AccountId sourceAccountId;
-		private AccountId targetAccountId;
-		private LocalDateTime timestamp;
-		private Money money;
+    public static class ActivityBuilder {
+        private ActivityId activityId;
+        private AccountId ownerAccountId;
+        private AccountId sourceAccountId;
+        private AccountId targetAccountId;
+        private LocalDateTime timestamp;
+        private Money money;
 
-		public ActivityBuilder withId(ActivityId id) {
-			this.id = id;
-			return this;
-		}
+        public ActivityBuilder withActivityId(ActivityId activityId) {
+            this.activityId = activityId;
+            return this;
+        }
 
-		public ActivityBuilder withOwnerAccount(AccountId accountId) {
-			this.ownerAccountId = accountId;
-			return this;
-		}
+        public ActivityBuilder withOwnerAccountId(AccountId ownerAccountId) {
+            this.ownerAccountId = ownerAccountId;
+            return this;
+        }
 
-		public ActivityBuilder withSourceAccount(AccountId accountId) {
-			this.sourceAccountId = accountId;
-			return this;
-		}
+        public ActivityBuilder withSourceAccountId(AccountId sourceAccountId) {
+            this.sourceAccountId = sourceAccountId;
+            return this;
+        }
 
-		public ActivityBuilder withTargetAccount(AccountId accountId) {
-			this.targetAccountId = accountId;
-			return this;
-		}
+        public ActivityBuilder withTargetAccountId(AccountId targetAccountId) {
+            this.targetAccountId = targetAccountId;
+            return this;
+        }
 
-		public ActivityBuilder withTimestamp(LocalDateTime timestamp) {
-			this.timestamp = timestamp;
-			return this;
-		}
+        public ActivityBuilder withTimestamp(LocalDateTime timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
 
-		public ActivityBuilder withMoney(Money money) {
-			this.money = money;
-			return this;
-		}
+        public ActivityBuilder withMoney(Money money) {
+            this.money = money;
+            return this;
+        }
 
-		public Activity build() {
-			return new Activity(
-					this.id,
-					this.ownerAccountId,
-					this.sourceAccountId,
-					this.targetAccountId,
-					this.timestamp,
-					this.money);
-		}
-	}
+        public Activity build() {
+            return new Activity(activityId, ownerAccountId, sourceAccountId, targetAccountId, timestamp, money);
+        }
+    }
+
 }
